@@ -1,3 +1,21 @@
+.bg-img {
+  height: 500px;
+  background-image: url('./img/bg-img.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.start {
+  opacity: 0;
+}
+
+.end {
+  opacity: 1;
+  transition: 1s;
+}
+
+
+
 .App {
   text-align: center;
 }
