@@ -29,14 +29,18 @@ function App() {
   let navigate = useNavigate();
   let [clickCount ,setClickCount] = useState(1);
   const categoryImage = [grid1,grid2,grid3,grid4];
+  let [watchGoods, setWatchGoods] = useState([])
 
-  useEffect(()=>{
-    if(localStorage.getItem('watched')==null)
-    localStorage.setItem('watched',JSON.stringify([]))
-  },[])
+  useEffect(() => {
+    if (localStorage.getItem('watched') === null) {
+      localStorage.setItem('watched', JSON.stringify([]));
+    }
 
-  let watchGoods = localStorage.getItem('watched')
-  watchGoods = JSON.parse(watchGoods)
+    const storedWatchGoods = localStorage.getItem('watched');
+    if (storedWatchGoods) {
+      setWatchGoods(JSON.parse(storedWatchGoods));
+    }
+  }, []);
   
   let userName = useQuery(['userName'],()=>
     axios.get('https://codingapple1.github.io/userdata.json').then((a)=>{
@@ -69,14 +73,18 @@ function App() {
           <br/>
           최근 본 상품
           <div className='watched'>
-          { watchGoods.map((a,i)=>{
-            return(
-              <>
-              <div key={i}>{category[a].title}</div>
-              <h6>{category[a].content}</h6>
-              </>
-            )
-          })}
+            {watchGoods.length > 0 ? (
+              watchGoods.map((a, i) => {
+                return (
+                  <div key={i}>
+                    <div>{category[a].title}</div>
+                    <h6>{category[a].content}</h6>
+                  </div>
+                );
+              })
+            ) : (
+              <div>최근 본 상품이 없습니다.</div>
+            )}
           </div>
           <div>
             <Container>
